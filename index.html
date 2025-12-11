@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Minha Sogra Querida</title>
+    <style>
+        /* Importando fontes elegantes do Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Lato:wght@300;400&display=swap');
+
+        :root {
+            --primary-color: #d4a373; /* Dourado suave */
+            --bg-color: #fce1e4;      /* Rosa muito claro */
+            --card-front: #fff0f5;    /* Lavanda avermelhada */
+            --text-color: #5d4037;    /* Marrom suave */
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(#e6c3c3 1px, transparent 1px);
+            background-size: 20px 20px;
+            font-family: 'Lato', sans-serif;
+            overflow: hidden;
+        }
+
+        /* Container 3D */
+        .scene {
+            width: 300px;
+            height: 400px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 1s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .card.is-open {
+            transform: rotateY(-180deg);
+        }
+
+        /* Faces do cartão */
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 15px;
+            border: 2px solid #fff;
+        }
+
+        /* Frente do Cartão */
+        .card-front {
+            background-color: var(--card-front);
+            background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
+            color: var(--text-color);
+            z-index: 2;
+        }
+
+        .flower-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3rem;
+            margin: 0;
+            text-align: center;
+            color: #c56183;
+        }
+
+        .click-hint {
+            margin-top: 30px;
+            font-size: 0.8rem;
+            opacity: 0.7;
+            animation: pulse 2s infinite;
+        }
+
+        /* Interior do Cartão (Verso da frente visualmente, mas tecnicamente outra face) */
+        .card-back {
+            background-color: white;
+            transform: rotateY(180deg);
+            padding: 30px;
+            box-sizing: border-box;
+            text-align: center;
+            background-image: linear-gradient(to bottom right, #fff, #fff5f5);
+        }
+
+        .message-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            padding-top: 10px;
+        }
+
+        .message-body {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--text-color);
+            margin-bottom: 20px;
+        }
+
+        .heart {
+            color: #c56183;
+            font-size: 20px;
+        }
+
+        /* Animações */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+
+        /* Confetes */
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            width: 100%;
+            height: 100%;
+            z-index: 99;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="scene">
+        <div class="card">
+            <div class="card-face card-front">
+                <div class="flower-icon">🌸</div>
+                <h1>Feliz Aniversário</h1>
+                <p style="margin-top:10px; font-style:italic; color:#888;">Para minha sogra querida.</p>
+                <div class="click-hint">(Clique para abrir)</div>
+            </div>
+
+            <div class="card-face card-back">
+                <div class="message-title">Muitas Felicidades!</div>
+                <div class="message-body">
+                    Hoje celebramos a vida de uma mulher incrível. Obrigado(a) por me acolher com tanto carinho e por ser essa pessoa maravilhosa.<br><br>
+                    Que seu dia seja repleto de amor, saúde e muitas alegrias. Você merece tudo de melhor!
+                </div>
+                <div class="heart">❤</div>
+                <p style="font-size: 0.8rem; margin-top: 20px; color: #999;">Com carinho, Renato Chong</p>
+            </div>
+        </div>
+    </div>
+
+    <canvas id="confetti"></canvas>
+
+    <script>
+        const card = document.querySelector('.card');
+        const canvas = document.getElementById('confetti');
+        const ctx = canvas.getContext('2d');
+        let confetti = [];
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Lógica de abrir/fechar
+        card.addEventListener('click', function() {
+            card.classList.toggle('is-open');
+            if (card.classList.contains('is-open')) {
+                launchConfetti();
+            }
+        });
+
+        // Sistema simples de confete
+        function launchConfetti() {
+            confetti = [];
+            for (let i = 0; i < 100; i++) {
+                confetti.push({
+                    x: window.innerWidth / 2, // Começa do centro
+                    y: window.innerHeight / 2,
+                    w: Math.random() * 10 + 5,
+                    h: Math.random() * 5 + 5,
+                    color: `hsl(${Math.random() * 360}, 100%, 70%)`,
+                    vx: Math.random() * 10 - 5,
+                    vy: Math.random() * -10 - 5,
+                    g: 0.2
+                });
+            }
+            animateConfetti();
+        }
+
+        function animateConfetti() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            let active = false;
+
+            confetti.forEach((c) => {
+                c.x += c.vx;
+                c.y += c.vy;
+                c.vy += c.g;
+                
+                ctx.fillStyle = c.color;
+                ctx.fillRect(c.x, c.y, c.w, c.h);
+
+                if (c.y < canvas.height) active = true;
+            });
+
+            if (active) requestAnimationFrame(animateConfetti);
+        }
+
+        // Ajustar canvas se redimensionar a tela
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
