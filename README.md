@@ -1,12 +1,12 @@
-# 🎉 Cartão de Aniversário Virtual
+# Cartão de Aniversário Virtual
 
 Um cartão de aniversário interativo desenvolvido com tecnologias Web, apresentando animações 3D CSS e efeitos de partículas com JavaScript.
 
-## 📋 Sobre o Projeto
+## Sobre o Projeto
 
 Este projeto consiste em uma página web estática que simula um cartão de aniversário físico. Ao ser clicado, o cartão realiza uma animação de "abertura" em 3D e dispara uma chuva de confetes virtuais. O objetivo foi criar uma experiência digital carinhosa e interativa para celebrar o aniversário de um ente querido.
 
-## 🚀 Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 * **HTML5:** Estrutura semântica.
 * **CSS3:**
@@ -18,14 +18,14 @@ Este projeto consiste em uma página web estática que simula um cartão de aniv
     * Manipulação do DOM para controle de classes (abrir/fechar).
     * **HTML5 Canvas API** para renderização e física das partículas de confete.
 
-## ✨ Funcionalidades
+## Funcionalidades
 
 * **Interatividade:** Clique para abrir/fechar o cartão.
 * **Animação 3D:** Efeito realista de virada de página.
 * **Sistema de Partículas:** Chuva de confetes coloridos gerada dinamicamente via Canvas quando o cartão abre.
 * **Responsividade:** O Canvas se ajusta automaticamente ao redimensionar a janela.
 
-## 🔧 Como Usar / Personalizar
+## Como Usar / Personalizar
 
 1.  **Clone o repositório:**
     ```bash
@@ -44,13 +44,4 @@ Este projeto consiste em uma página web estática que simula um cartão de aniv
     }
     ```
 
-## 🌐 Deploy (GitHub Pages)
 
-Este projeto está pronto para ser hospedado gratuitamente no GitHub Pages:
-
-1.  Vá em **Settings** > **Pages** no seu repositório.
-2.  Em **Source**, selecione a branch `main`.
-3.  Aguarde o link ser gerado.
-
----
-Feito com ❤️ por [Seu Nome]
