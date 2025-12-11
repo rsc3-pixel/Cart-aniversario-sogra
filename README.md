@@ -43,5 +43,15 @@ Este projeto consiste em uma página web estática que simula um cartão de aniv
         --bg-color: #fce1e4;      /* Cor de fundo da página */
     }
     ```
+## 🌐 Deploy (GitHub Pages)
+
+Este projeto está pronto para ser hospedado gratuitamente no GitHub Pages:
+
+1.  Vá em **Settings** > **Pages** no seu repositório.
+2.  Em **Source**, selecione a branch `main`.
+3.  Aguarde o link ser gerado.
+
+---
+Feito com ❤️ por [Seu Nome]
 
 
